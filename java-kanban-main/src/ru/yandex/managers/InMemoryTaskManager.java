@@ -53,6 +53,9 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
             System.out.println("Такая задача уже есть");
         else
             tasks.put(task.id, task);
+
+        inMemoryHistoryManager.addHistory(task);
+
     }
 
     @Override
@@ -61,6 +64,9 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
             System.out.println("Такой эпик уже есть");
         else
             epics.put(epic.id, epic);
+
+        inMemoryHistoryManager.addHistory(epic);
+
     }
 
     @Override
@@ -71,6 +77,7 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
             subtasks.put(subtask.id, subtask);
             epic.idSubtasks.add(subtask.id);
         }
+        inMemoryHistoryManager.addHistory(subtask);
     }
 
     //Обновление
@@ -144,49 +151,8 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
     public static int setNumberOfId() {
         return ++numberOfId;
     }
-
-    public void getTask(Task task) {
-        if (inMemoryHistoryManager.history.size() < 10) {
-            inMemoryHistoryManager.history.add(task);
-        } else {
-            inMemoryHistoryManager.history.remove(0);
-            inMemoryHistoryManager.history.add(task);
-        }
-        System.out.println(task);
-
-    }
-
-    public void getEpic(Epic epic) {
-        if (inMemoryHistoryManager.history.size() < 10) {
-            inMemoryHistoryManager.history.add(epic);
-        } else {
-            inMemoryHistoryManager.history.remove(0);
-            inMemoryHistoryManager.history.add(epic);
-        }
-        System.out.println(epic);
-
-    }
-
-    public void getSubtask(Subtask subtask) {
-        if (inMemoryHistoryManager.history.size() < 10) {
-            inMemoryHistoryManager.history.add(subtask);
-        } else {
-            inMemoryHistoryManager.history.remove(0);
-            inMemoryHistoryManager.history.add(subtask);
-        }
-        System.out.println(subtask);
-
-    }
 }
 
-//    @Override
-//    public void addHistory(Task task) {
-//        if (inMemoryHistoryManager.history.size()<10) {
-//            inMemoryHistoryManager.history.add(task);
-//        } else {
-//            inMemoryHistoryManager.history.remove(0);
-//            inMemoryHistoryManager.history.add(task);
-//        }
 
 
 
