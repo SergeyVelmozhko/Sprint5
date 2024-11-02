@@ -7,37 +7,31 @@ import ru.yandex.tasks.Task;
 public class Main {
 
     public static void main(String[] args) {
-//        ru.yandex.Managers.InMemoryTaskManager taskManager = new ru.yandex.Managers.InMemoryTaskManager();
-//        ru.yandex.Tasks.Task task = new ru.yandex.Tasks.Task("ru.yandex.Tasks.Task", "descTask");
-//        ru.yandex.Tasks.Epic epic = new ru.yandex.Tasks.Epic("ru.yandex.Tasks.Epic", "descEpic");
-//        ru.yandex.Tasks.Subtask subtask = new ru.yandex.Tasks.Subtask("ru.yandex.Tasks.Subtask", "descSubtask", epic);
-//
-//        Managers managers = new Managers();
-//        managers.getDefault();
-//        InMemoryTaskManager inMemoryTaskManager = managers.getDefault();
-//        Epic epic = new Epic("1","1");
-//        Task task = new Task("2", "2");
-//        Subtask subtask = new Subtask("3", "3", epic);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//
-//        inMemoryTaskManager.getEpic(epic);
-//        inMemoryTaskManager.getSubtask(subtask);
-//        inMemoryTaskManager.getHistory();
+
+
+        Managers managers = new Managers();
+        managers.getDefault();
+        InMemoryTaskManager inMemoryTaskManager = managers.getDefault();
+        Epic epic = new Epic("1","1");
+        Task task = new Task("2", "2");
+        Subtask subtask = new Subtask("3", "3", epic);
+        Epic epic2 = new Epic("4","4");
+        Task task2 = new Task("5", "5");
+        Subtask subtask2 = new Subtask("6", "6", epic);
+
 
        //Создание
-//        taskManager.addTask(task);
-//        taskManager.addEpic(epic);
-//        taskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addTask(task);
+        inMemoryTaskManager.addEpic(epic);
+        inMemoryTaskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addTask(task2);
+        inMemoryTaskManager.addEpic(epic2);
+        inMemoryTaskManager.addSudtask(subtask2, epic2);
+        inMemoryTaskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addTask(task);
+        inMemoryTaskManager.addTask(task2);
+
+        inMemoryTaskManager.getHistory();
 
 //        // Получение списка задач
 //        taskManager.getAllTask();
