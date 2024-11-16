@@ -4,12 +4,14 @@ import ru.yandex.tasks.*;
 
 import java.util.HashMap;
 
-public class InMemoryTaskManager<T extends Task> implements TaskManager {
+public class InMemoryTaskManager implements TaskManager {
     private static int numberOfId = 0;
     HashMap<Integer, Task> tasks = new HashMap<>();
     HashMap<Integer, Epic> epics = new HashMap<>();
     HashMap<Integer, Subtask> subtasks = new HashMap<>();
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
+
+
 
     // Получение списка задач
     @Override
@@ -70,12 +72,12 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
     }
 
     @Override
-    public void addSudtask(Subtask subtask, Epic epic) {
+    public void addSudtask(Subtask subtask) {
         if (subtasks.containsKey(subtask.id))
             System.out.println("Такая подзадача уже есть");
         else {
             subtasks.put(subtask.id, subtask);
-            epic.idSubtasks.add(subtask.id);
+            epics.get(subtask.idEpic).idSubtasks.add(subtask.id);
         }
         inMemoryHistoryManager.addHistory(subtask);
     }

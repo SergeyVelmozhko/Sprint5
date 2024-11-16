@@ -11,13 +11,13 @@ class InMemoryTaskManagerTest {
     static InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
     static Task task = new Task("Первая задача", "Первое описание");
     static Epic epic = new Epic("Первый эпик", "Первое описание эпика");
-    static Subtask subtask = new Subtask("Первая подзадача", "Первое описание подзадачи", epic);
+    static Subtask subtask = new Subtask("Первая подзадача", "Первое описание подзадачи", epic.id);
 
     @BeforeEach
      void add() {
         inMemoryTaskManager.addTask(task);
         inMemoryTaskManager.addEpic(epic);
-        inMemoryTaskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addSudtask(subtask);
     }
 
     @Test

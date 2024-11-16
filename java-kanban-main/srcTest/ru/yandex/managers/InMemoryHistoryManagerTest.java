@@ -4,11 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.yandex.tasks.*;
-
-
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
+
 
 public class InMemoryHistoryManagerTest {
     static InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
@@ -27,10 +24,10 @@ public class InMemoryHistoryManagerTest {
                             String nameSubtask2, String descriptionSubtask2) {
         task = new Task(nameTask, descriptionTask);
         epic = new Epic(nameEpic, descriptionEpic);
-        subtask = new Subtask(nameSubtask, descriptionSubtask, epic);
+        subtask = new Subtask(nameSubtask, descriptionSubtask, epic.id);
         task2 = new Task(nameTask2, descriptionTask2);
         epic2 = new Epic(nameEpic2, descriptionEpic2);
-        subtask2 = new Subtask(nameSubtask2, descriptionSubtask2, epic);
+        subtask2 = new Subtask(nameSubtask2, descriptionSubtask2, epic.id);
     }
 
     @BeforeAll
@@ -47,10 +44,10 @@ public class InMemoryHistoryManagerTest {
     void addHistory() {
         inMemoryTaskManager.addTask(task);
         inMemoryTaskManager.addEpic(epic);
-        inMemoryTaskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addSudtask(subtask);
         inMemoryTaskManager.addTask(task2);
         inMemoryTaskManager.addEpic(epic2);
-        inMemoryTaskManager.addSudtask(subtask2, epic2);
+        inMemoryTaskManager.addSudtask(subtask2);
         inMemoryTaskManager.addTask(task);
 
         LinkedHashSet<Task> actual = new LinkedHashSet<>();
@@ -69,17 +66,17 @@ public class InMemoryHistoryManagerTest {
     void sizeHistory() {
         inMemoryTaskManager.addTask(task);
         inMemoryTaskManager.addEpic(epic);
-        inMemoryTaskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addSudtask(subtask);
         inMemoryTaskManager.addTask(task2);
         inMemoryTaskManager.addEpic(epic2);
-        inMemoryTaskManager.addSudtask(subtask2, epic2);
+        inMemoryTaskManager.addSudtask(subtask2);
         inMemoryTaskManager.addTask(task);
         inMemoryTaskManager.addTask(task);
         inMemoryTaskManager.addEpic(epic);
-        inMemoryTaskManager.addSudtask(subtask, epic);
+        inMemoryTaskManager.addSudtask(subtask);
         inMemoryTaskManager.addTask(task2);
         inMemoryTaskManager.addEpic(epic2);
-        inMemoryTaskManager.addSudtask(subtask2, epic2);
+        inMemoryTaskManager.addSudtask(subtask2);
         inMemoryTaskManager.addTask(task);
 
         LinkedHashSet<Task> actual = new LinkedHashSet<>(inMemoryTaskManager.inMemoryHistoryManager.history);
