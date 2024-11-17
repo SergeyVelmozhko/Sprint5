@@ -10,61 +10,15 @@ public class Main {
 
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(Path.of("java-kanban-main/src/ru/yandex/file/history.txt").toFile());
 
-
         //Созддание задачи для проверки
 //        Managers managers = new Managers();
         Epic epic = new Epic("1","1");
         Task task = new Task("2", "2");
         Subtask subtask = new Subtask("3", "3", 5);
 
-
         //Проверка на добавление задачи в файл "history.txt"
         fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addEpic(epic);
         fileBackedTaskManager.addSudtask(subtask);
-
-//        Epic epic2 = new Epic("4","4");
-//        Task task2 = new Task("5", "5");
-//        Subtask subtask2 = new Subtask("6", "6", 8);
-////
-////
-////       //Создание
-//        inMemoryTaskManager.addTask(task);
-//        inMemoryTaskManager.addEpic(epic);
-//        inMemoryTaskManager.addSudtask(subtask, epic);
-//        inMemoryTaskManager.addTask(task2);
-//        inMemoryTaskManager.addEpic(epic2);
-//        inMemoryTaskManager.addSudtask(subtask2, epic2);
-//        inMemoryTaskManager.addSudtask(subtask, epic);
-//        inMemoryTaskManager.addTask(task);
-//        inMemoryTaskManager.addTask(task2);
-//
-//        inMemoryTaskManager.getHistory();
-//
-////        // Получение списка задач
-////        taskManager.getAllTask();
-////
-////        //Получение по идентификатору
-////        taskManager.getObjectById(1);
-////
-////        //Удаление всех задач
-////        taskManager.removeTask(); // Скрыто для проверки обновления
-////
-////        //Обновление
-////        ru.yandex.Tasks.Task task1 = new ru.yandex.Tasks.Task("Task1", "descTask1");
-////        ru.yandex.Tasks.Epic epic1 = new ru.yandex.Tasks.Epic("Epic1", "descEpic1");
-////        ru.yandex.Tasks.Subtask subtask1 = new ru.yandex.Tasks.Subtask("subtask1", "descSubtask1", epic);
-////
-////        taskManager.updateTask(task1, ru.yandex.Tasks.Status.IN_PROGRESS);
-////        taskManager.updateEpic(epic1);
-////        taskManager.updateSubtask(subtask1, ru.yandex.Tasks.Status.DONE, epic);
-////        taskManager.getAllTask(); // проверка на обновление
-////
-////        //Удаление по идентификатору
-////        taskManager.removeById(1);
-////        taskManager.getAllTask(); // Проверка на удаление
-////
-////        //Получение списка всех подзадач определённого эпика
-////        taskManager.getSudtaskByEpic(epic);
     }
 }

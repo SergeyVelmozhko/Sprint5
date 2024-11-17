@@ -52,7 +52,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void addTask(Task task) {
         if (tasks.containsKey(task.id))
-            System.out.println("Такая задача уже есть");
+            System.out.println("Задача: " + task.name + "уже заведена");
         else
             tasks.put(task.id, task);
 
@@ -63,7 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void addEpic(Epic epic) {
         if (epics.containsKey(epic.id))
-            System.out.println("Такой эпик уже есть");
+            System.out.println("Эпик: " + epic.name + "уже заведен");
         else
             epics.put(epic.id, epic);
 
@@ -74,7 +74,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void addSudtask(Subtask subtask) {
         if (subtasks.containsKey(subtask.id))
-            System.out.println("Такая подзадача уже есть");
+            System.out.println("Подзадача: " + subtask.name + "уже заведена");
         else {
             subtasks.put(subtask.id, subtask);
             epics.get(subtask.idEpic).idSubtasks.add(subtask.id);
