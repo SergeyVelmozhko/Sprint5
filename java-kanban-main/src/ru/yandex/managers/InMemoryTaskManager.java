@@ -4,12 +4,14 @@ import ru.yandex.tasks.*;
 
 import java.util.HashMap;
 
-public class InMemoryTaskManager<T extends Task> implements TaskManager {
+public class InMemoryTaskManager implements TaskManager {
     private static int numberOfId = 0;
     HashMap<Integer, Task> tasks = new HashMap<>();
     HashMap<Integer, Epic> epics = new HashMap<>();
     HashMap<Integer, Subtask> subtasks = new HashMap<>();
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
+
+
 
     // Получение списка задач
     @Override
@@ -50,27 +52,34 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
     @Override
     public void addTask(Task task) {
         if (tasks.containsKey(task.id))
-            System.out.println("Такая задача уже есть");
+            System.out.println("Задача: " + task.name + "уже заведена");
         else
             tasks.put(task.id, task);
+
+        inMemoryHistoryManager.addHistory(task);
+
     }
 
     @Override
     public void addEpic(Epic epic) {
         if (epics.containsKey(epic.id))
-            System.out.println("Такой эпик уже есть");
+            System.out.println("Эпик: " + epic.name + "уже заведен");
         else
             epics.put(epic.id, epic);
+
+        inMemoryHistoryManager.addHistory(epic);
+
     }
 
     @Override
-    public void addSudtask(Subtask subtask, Epic epic) {
+    public void addSudtask(Subtask subtask) {
         if (subtasks.containsKey(subtask.id))
-            System.out.println("Такая подзадача уже есть");
+            System.out.println("Подзадача: " + subtask.name + "уже заведена");
         else {
             subtasks.put(subtask.id, subtask);
-            epic.idSubtasks.add(subtask.id);
+            epics.get(subtask.idEpic).idSubtasks.add(subtask.id);
         }
+        inMemoryHistoryManager.addHistory(subtask);
     }
 
     //Обновление
@@ -144,49 +153,8 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager {
     public static int setNumberOfId() {
         return ++numberOfId;
     }
-
-    public void getTask(Task task) {
-        if (inMemoryHistoryManager.history.size() < 10) {
-            inMemoryHistoryManager.history.add(task);
-        } else {
-            inMemoryHistoryManager.history.remove(0);
-            inMemoryHistoryManager.history.add(task);
-        }
-        System.out.println(task);
-
-    }
-
-    public void getEpic(Epic epic) {
-        if (inMemoryHistoryManager.history.size() < 10) {
-            inMemoryHistoryManager.history.add(epic);
-        } else {
-            inMemoryHistoryManager.history.remove(0);
-            inMemoryHistoryManager.history.add(epic);
-        }
-        System.out.println(epic);
-
-    }
-
-    public void getSubtask(Subtask subtask) {
-        if (inMemoryHistoryManager.history.size() < 10) {
-            inMemoryHistoryManager.history.add(subtask);
-        } else {
-            inMemoryHistoryManager.history.remove(0);
-            inMemoryHistoryManager.history.add(subtask);
-        }
-        System.out.println(subtask);
-
-    }
 }
 
-//    @Override
-//    public void addHistory(Task task) {
-//        if (inMemoryHistoryManager.history.size()<10) {
-//            inMemoryHistoryManager.history.add(task);
-//        } else {
-//            inMemoryHistoryManager.history.remove(0);
-//            inMemoryHistoryManager.history.add(task);
-//        }
 
 
 

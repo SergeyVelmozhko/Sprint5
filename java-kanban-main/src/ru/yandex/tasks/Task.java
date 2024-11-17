@@ -3,8 +3,8 @@ package ru.yandex.tasks;
 import ru.yandex.managers.InMemoryTaskManager;
 
 public class Task {
-    String name;
-    String description;
+    public String name;
+    public String description;
     public int id;
 
     public Status status;
@@ -16,8 +16,8 @@ public class Task {
         status = Status.NEW;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String toWriter() {
+        return String.format("%s,TASK,%s,%s,%s\n", id, name, status, description);
     }
 
     @Override
