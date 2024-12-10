@@ -1,75 +1,31 @@
-import ru.yandex.managers.InMemoryTaskManager;
-import ru.yandex.managers.Managers;
+import ru.yandex.managers.FileBackedTaskManager;
 import ru.yandex.tasks.Epic;
 import ru.yandex.tasks.Subtask;
 import ru.yandex.tasks.Task;
+import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Main {
 
     public static void main(String[] args) {
-//        ru.yandex.Managers.InMemoryTaskManager taskManager = new ru.yandex.Managers.InMemoryTaskManager();
-//        ru.yandex.Tasks.Task task = new ru.yandex.Tasks.Task("ru.yandex.Tasks.Task", "descTask");
-//        ru.yandex.Tasks.Epic epic = new ru.yandex.Tasks.Epic("ru.yandex.Tasks.Epic", "descEpic");
-//        ru.yandex.Tasks.Subtask subtask = new ru.yandex.Tasks.Subtask("ru.yandex.Tasks.Subtask", "descSubtask", epic);
-//
-//        Managers managers = new Managers();
-//        managers.getDefault();
-//        InMemoryTaskManager inMemoryTaskManager = managers.getDefault();
-//        Epic epic = new Epic("1","1");
-//        Task task = new Task("2", "2");
-//        Subtask subtask = new Subtask("3", "3", epic);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//        inMemoryTaskManager.getTask(task);
-//
-//        inMemoryTaskManager.getEpic(epic);
-//        inMemoryTaskManager.getSubtask(subtask);
-//        inMemoryTaskManager.getHistory();
 
-       //Создание
-//        taskManager.addTask(task);
-//        taskManager.addEpic(epic);
-//        taskManager.addSudtask(subtask, epic);
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(Path.of("java-kanban-main/src/ru/yandex/file/history.txt").toFile());
 
-//        // Получение списка задач
-//        taskManager.getAllTask();
-//
-//        //Получение по идентификатору
-//        taskManager.getObjectById(1);
-//
-//        //Удаление всех задач
-//        taskManager.removeTask(); // Скрыто для проверки обновления
-//
-//        //Обновление
-//        ru.yandex.Tasks.Task task1 = new ru.yandex.Tasks.Task("Task1", "descTask1");
-//        ru.yandex.Tasks.Epic epic1 = new ru.yandex.Tasks.Epic("Epic1", "descEpic1");
-//        ru.yandex.Tasks.Subtask subtask1 = new ru.yandex.Tasks.Subtask("subtask1", "descSubtask1", epic);
-//
-//        taskManager.updateTask(task1, ru.yandex.Tasks.Status.IN_PROGRESS);
-//        taskManager.updateEpic(epic1);
-//        taskManager.updateSubtask(subtask1, ru.yandex.Tasks.Status.DONE, epic);
-//        taskManager.getAllTask(); // проверка на обновление
-//
-//        //Удаление по идентификатору
-//        taskManager.removeById(1);
-//        taskManager.getAllTask(); // Проверка на удаление
-//
-//        //Получение списка всех подзадач определённого эпика
-//        taskManager.getSudtaskByEpic(epic);
+        //Созддание задачи для проверки
 
+        Epic epic = new Epic("1","1");
+        Task task = new Task("2", "2");
+        Subtask subtask = new Subtask("3", "3", epic.id);
+        task.startTime = LocalDateTime.of(2024, 9, 19, 18, 52);
+        epic.startTime = LocalDateTime.of(2024, 9, 19, 18, 53);
+        subtask.startTime = LocalDateTime.of(2024, 8, 19, 18, 52);
 
+        //Проверка на добавление задачи в файл "history.txt"
 
-
-
-
-
+        fileBackedTaskManager.addTask(task);
+        fileBackedTaskManager.addEpic(epic);
+        fileBackedTaskManager.addSudtask(subtask);
+        System.out.println(fileBackedTaskManager.getPrioritizedTasks());
     }
 }

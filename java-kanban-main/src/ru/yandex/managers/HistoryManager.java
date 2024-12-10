@@ -7,5 +7,7 @@ public interface HistoryManager<T extends Task> {
 
     void addHistory(T task);
 
+
+
     public void getHistory();
 }

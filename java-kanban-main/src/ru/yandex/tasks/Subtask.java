@@ -1,10 +1,15 @@
 package ru.yandex.tasks;
 
 public class Subtask extends Task {
-    int idEpic;
-    public Subtask(String name, String description, Epic epic) {
+    public int idEpic;
+    public Subtask(String name, String description, int idEpic) {
         super(name, description);
-        this.idEpic = epic.id;
+        this.idEpic = idEpic;
+    }
+
+    @Override
+    public String toWriter() {
+        return String.format("%d,SUBTASK,%s,%s,%s,%s,%s,%d\n", id, name, status, description, duration.toMinutes(), startTime, idEpic);
     }
 
     @Override

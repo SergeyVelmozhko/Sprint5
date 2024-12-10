@@ -2,25 +2,27 @@ package ru.yandex.managers;
 
 import ru.yandex.tasks.Task;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 
-public class InMemoryHistoryManager <T extends Task> implements HistoryManager {
-    ArrayList<T> history = new ArrayList<>();
+
+public class InMemoryHistoryManager<T extends Task> implements HistoryManager {
+    LinkedHashSet<T> history = new LinkedHashSet<>();
+
+
     @Override
     public void addHistory(Task task) {
-        if (history.size()<10) {
-            history.add((T) task);
-        } else {
-            history.remove(0);
-            history.add((T) task);
+        history.remove(task);
+        if (history.size() > 10) {
+            history.removeFirst();
         }
+        history.addLast((T) task);
     }
+
 
     @Override
     public void getHistory() {
-        System.out.println(history.toString());
+        System.out.println(history);
     }
-
-
 }
 

@@ -10,6 +10,12 @@ public class Epic extends Task {
     }
 
     @Override
+    public String toWriter() {
+        return String.format("%s,EPIC,%s,%s,%s,%s,%s\n", id, name, status, description, duration.toMinutes(), startTime);
+    }
+
+
+    @Override
     public String toString() {
         return "ru.yandex.Tasks.Epic{" +
                 "name='" + name + '\'' +

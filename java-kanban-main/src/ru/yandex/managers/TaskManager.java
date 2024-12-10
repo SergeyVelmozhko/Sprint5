@@ -2,6 +2,8 @@ package ru.yandex.managers;
 
 import ru.yandex.tasks.*;
 
+import java.util.TreeSet;
+
 public interface TaskManager {
     // Получение списка задач
     void getAllTask();
@@ -17,7 +19,7 @@ public interface TaskManager {
 
     void addEpic(Epic epic);
 
-    void addSudtask(Subtask subtask, Epic epic);
+    void addSudtask(Subtask subtask);
 
     //Обновление
     void updateTask(Task task1, Status status);
@@ -34,4 +36,5 @@ public interface TaskManager {
 
     //Хранение запросов
     void getHistory();
+    TreeSet<Task> getPrioritizedTasks();
 }
