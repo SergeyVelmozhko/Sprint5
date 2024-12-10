@@ -21,22 +21,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public void save() {
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("id,type,name,status,description,duration,startTime,epic\n");
+        StringBuilder stringForSave = new StringBuilder();
+        stringForSave.append("id,type,name,status,description,duration,startTime,epic\n");
 
         for (Task task : tasks.values()) {
-            sb.append(task.toWriter());
+            stringForSave.append(task.toWriter());
         }
 
         for (Epic epic : epics.values()) {
-            sb.append(epic.toWriter());
+            stringForSave.append(epic.toWriter());
         }
 
         for (Subtask subtask : subtasks.values()) {
-            sb.append(subtask.toWriter());
+            stringForSave.append(subtask.toWriter());
         }
         try {
-            Files.writeString(file.toPath(), sb);
+            Files.writeString(file.toPath(), stringForSave);
         } catch (IOException e) {
             throw new ManagersSaveException("Ошибка при сохранении");
         }
