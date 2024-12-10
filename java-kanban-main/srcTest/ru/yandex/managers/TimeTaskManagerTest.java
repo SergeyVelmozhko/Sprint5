@@ -7,12 +7,13 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.tasks.Epic;
 import ru.yandex.tasks.Subtask;
 import ru.yandex.tasks.Task;
-
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class FileBackedTaskManagerTest {
+public class TimeTaskManagerTest {
     static File file;
     static FileBackedTaskManager fileBackedTaskManager;
 
@@ -27,26 +28,30 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void saveTest() throws IOException {
-        Epic epic = new Epic("1", "1");
-        Task task = new Task("2", "2");
-        Subtask subtask = new Subtask("3", "3", epic.id);
+    public void saveAndPrioritizedTasksTest() throws IOException {
+        Epic epic = new Epic("Задача 1", "1");
+        Task task = new Task("Задача 2", "2");
+        Subtask subtask = new Subtask("Задача 3", "3", epic.id);
+        task.startTime = LocalDateTime.of(2024, 9, 19, 18, 52);
+        epic.startTime = LocalDateTime.of(2024, 9, 19, 18, 53);
+        subtask.startTime = LocalDateTime.of(2024, 9, 19, 18, 51);
         fileBackedTaskManager.addTask(task);
         fileBackedTaskManager.addTask(epic);
         fileBackedTaskManager.addTask(subtask);
         Assertions.assertTrue(Files.size(file.toPath()) > 0);
+        fileBackedTaskManager.getPrioritizedTasks().stream().forEach(i -> System.out.println(i.name + ":" + i.startTime));
     }
 
     @Test
-    public void loadFromFileTest() {
+    public void isIntersectionTest() {
         Epic epic = new Epic("1", "1");
         Task task = new Task("2", "2");
-        fileBackedTaskManager.addTask(task);
-        fileBackedTaskManager.addEpic(epic);
-        FileBackedTaskManager fbtm = new FileBackedTaskManager(file);
+        task.startTime = LocalDateTime.of(2024, 9, 19, 18, 52);
+        task.duration = Duration.ofMinutes(90);
+        epic.startTime = LocalDateTime.of(2024, 9, 19, 18, 53);
 
-
-        Assertions.assertEquals(epic.toWriter(), fbtm.epics.get(4).toWriter());
-        Assertions.assertEquals(task.toWriter(), fbtm.tasks.get(5).toWriter());
-        }
+        Assertions.assertFalse(fileBackedTaskManager.isIntersection(epic));
+        Assertions.assertTrue(fileBackedTaskManager.isIntersection(task));
     }
+}
+

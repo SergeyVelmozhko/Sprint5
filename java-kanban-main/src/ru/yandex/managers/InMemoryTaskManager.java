@@ -2,15 +2,17 @@ package ru.yandex.managers;
 
 import ru.yandex.tasks.*;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 public class InMemoryTaskManager implements TaskManager {
     private static int numberOfId = 0;
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    HashMap<Integer, Epic> epics = new HashMap<>();
-    HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-
+    public HashMap<Integer, Task> tasks = new HashMap<>();
+    public HashMap<Integer, Epic> epics = new HashMap<>();
+    public HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    public InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
 
     // Получение списка задач
@@ -53,8 +55,11 @@ public class InMemoryTaskManager implements TaskManager {
     public void addTask(Task task) {
         if (tasks.containsKey(task.id))
             System.out.println("Задача: " + task.name + "уже заведена");
-        else
+        else {
             tasks.put(task.id, task);
+            isIntersection(task);
+        }
+
 
         inMemoryHistoryManager.addHistory(task);
 
@@ -64,9 +69,10 @@ public class InMemoryTaskManager implements TaskManager {
     public void addEpic(Epic epic) {
         if (epics.containsKey(epic.id))
             System.out.println("Эпик: " + epic.name + "уже заведен");
-        else
+        else {
             epics.put(epic.id, epic);
-
+            isIntersection(epic);
+        }
         inMemoryHistoryManager.addHistory(epic);
 
     }
@@ -78,6 +84,8 @@ public class InMemoryTaskManager implements TaskManager {
         else {
             subtasks.put(subtask.id, subtask);
             epics.get(subtask.idEpic).idSubtasks.add(subtask.id);
+            isIntersection(subtask);
+
         }
         inMemoryHistoryManager.addHistory(subtask);
     }
@@ -148,6 +156,35 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void getHistory() {
         inMemoryHistoryManager.getHistory();
+    }
+
+    @Override
+    public TreeSet<Task> getPrioritizedTasks() {
+        TreeSet<Task> listTasks = new TreeSet<>(Comparator.comparing(o -> o.startTime));
+        listTasks.addAll(tasks.values());
+        listTasks.addAll(epics.values());
+        listTasks.addAll(subtasks.values());
+        return listTasks;
+    }
+
+    public Boolean isIntersection(Task newTask) {
+        LocalDateTime newTaskStart = newTask.startTime;
+        LocalDateTime newTaskEnd = newTask.getEndTime();
+
+        for (Task task : tasks.values()) {
+            if (newTask.startTime == null || newTask.getEndTime() == null) return false;
+            if (newTaskStart.isBefore(task.getEndTime()) && task.startTime.isBefore(newTaskEnd)) {
+                return true;
+            }
+        }
+
+        for (Subtask subtask : subtasks.values()) {
+            if (newTask.startTime == null || newTask.getEndTime() == null) return false;
+            if (newTaskStart.isBefore(subtask.getEndTime()) && subtask.startTime.isBefore(newTaskEnd)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static int setNumberOfId() {

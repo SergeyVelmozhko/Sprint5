@@ -2,6 +2,8 @@ package ru.yandex.managers;
 
 import ru.yandex.tasks.*;
 
+import java.util.TreeSet;
+
 public interface TaskManager {
     // Получение списка задач
     void getAllTask();
@@ -34,4 +36,5 @@ public interface TaskManager {
 
     //Хранение запросов
     void getHistory();
+    TreeSet<Task> getPrioritizedTasks();
 }

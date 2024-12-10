@@ -9,7 +9,7 @@ public class Subtask extends Task {
 
     @Override
     public String toWriter() {
-        return String.format("%d,SUBTASK,%s,%s,%s,%d\n", id, name, status, description, idEpic);
+        return String.format("%d,SUBTASK,%s,%s,%s,%s,%s,%d\n", id, name, status, description, duration.toMinutes(), startTime, idEpic);
     }
 
     @Override
