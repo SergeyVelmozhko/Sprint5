@@ -47,9 +47,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             if (file.exists() && Files.size(file.toPath()) > 0) {
 
                 FileReader reader = new FileReader("java-kanban-main/src/ru/yandex/file/history.txt");
-                BufferedReader br = new BufferedReader(reader);
-                while (br.ready()) {
-                    String line = br.readLine();
+                BufferedReader readingData = new BufferedReader(reader);
+                while (readingData.ready()) {
+                    String line = readingData.readLine();
                     String[] array = line.split(",");
                     switch (array[1]) {
                         case "TASK" -> {
@@ -90,7 +90,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         }
                     }
                 }
-                br.close();
+                readingData.close();
             }
         } catch (IOException e) {
             throw new ManagersSaveException("Ошибка записи");
